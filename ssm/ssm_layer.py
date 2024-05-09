@@ -1,5 +1,6 @@
 import torch 
 from torch import nn
+import numpy as np
 
 class SSM(nn.Module):
     """Defines a SSM layer
@@ -28,7 +29,6 @@ class SSM(nn.Module):
         self.B = torch.rand(N, 1)
         self.C = torch.rand(1, N)
 
-    def discretize_signal(self, A, B, C):
-        A = self.A
-        B = self.B
-        C = self.C
+    def discretize_signal(self, A, B, C, step):
+        I = np.eye(A.shape[0])
+        BL = torch.linalg.inv(I - (step / 2.0) * A)
